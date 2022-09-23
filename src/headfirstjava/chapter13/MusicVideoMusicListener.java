@@ -9,9 +9,9 @@ import javax.swing.JPanel;
 import java.awt.Graphics2D;
 
 public class MusicVideoMusicListener extends JPanel implements ControllerEventListener {
-
+    
     boolean msg = false;
-
+    
     @Override
     public void controlChange(ShortMessage event) {
         System.out.println("I got the event");    
