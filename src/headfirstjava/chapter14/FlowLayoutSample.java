@@ -47,13 +47,19 @@ public class FlowLayoutSample {
         myPanel.add(sampleInput);
         sampleInput.setText("wetin dey oo");
 
+        JTextArea text = new JTextArea(10,20);
+        JScrollPane scroller = new JScrollPane(text);
+        text.setLineWrap(true);
 
+        scroller.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+        scroller.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+
+        myPanel.add(scroller);
 
 
 
 
         myFrame.getContentPane().add(BorderLayout.EAST, myPanel);
-
         myFrame.setSize(500, 500);
         myFrame.setVisible(true);
 
