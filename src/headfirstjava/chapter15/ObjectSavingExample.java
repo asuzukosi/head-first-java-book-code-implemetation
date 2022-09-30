@@ -20,13 +20,13 @@ public class ObjectSavingExample implements Serializable {
 
         GameCharacter troll = new GameCharacter("Troll", 200, trolWeapons);
 
-        GameCharacter[] characters = {elf, troll};
 
 
         try {
             FileOutputStream fileOutput = new FileOutputStream("gameCharacters.ser");
             ObjectOutputStream objectStream = new ObjectOutputStream(fileOutput);
-            objectStream.writeObject(characters);
+            objectStream.writeObject(elf);
+            objectStream.writeObject(troll);
             objectStream.close();
         } catch (Exception e){
             e.printStackTrace();
