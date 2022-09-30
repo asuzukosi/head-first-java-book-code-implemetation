@@ -117,7 +117,6 @@ public class QuizCardBuilder {
             }
             writer.close();
         } catch (Exception e) {
-            // TODO: handle exception
             e.printStackTrace();
         }
     }
