@@ -8,6 +8,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.File;
 
 
 public class CyberBeatBox {
@@ -212,8 +213,12 @@ public class CyberBeatBox {
                 }
 
             }
+            JFileChooser ﬁleOpen = new JFileChooser();
+            ﬁleOpen.showOpenDialog(theFrame);
+            File file = ﬁleOpen.getSelectedFile();
+
             try {
-                FileOutputStream fos = new FileOutputStream("CheckBox.ser");
+                FileOutputStream fos = new FileOutputStream(file);
                 ObjectOutputStream oos = new ObjectOutputStream(fos);
                 oos.writeObject(checkboxState);
 
@@ -228,8 +233,12 @@ public class CyberBeatBox {
 
     public class MyReadInListener implements ActionListener {
         public void actionPerformed(ActionEvent a) {
+            JFileChooser ﬁleOpen = new JFileChooser();
+            ﬁleOpen.showOpenDialog(theFrame);
+            File file = ﬁleOpen.getSelectedFile();
+
             try { 
-                FileInputStream fis = new FileInputStream("CheckBox.ser");
+                FileInputStream fis = new FileInputStream(file);
                 ObjectInputStream ois = new ObjectInputStream(fis);
                 Object obj = ois.readObject();
                 boolean[] checkboxState = (boolean[])obj;
