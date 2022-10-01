@@ -4,6 +4,10 @@ import javax.swing.*;
 import javax.sound.midi.*;
 import java.util.*;
 import java.awt.event.*;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 
 
 public class CyberBeatBox {
@@ -54,6 +58,14 @@ public class CyberBeatBox {
         JButton downTempo = new JButton("Tempo Down");
         downTempo.addActionListener(new MyDownTempoListener());
         buttonBox.add(downTempo);
+
+        JButton saveIt = new JButton("Save It");
+        saveIt.addActionListener(new MySendListener());
+        buttonBox.add(saveIt);
+
+        JButton readIt = new JButton("Read It");
+        readIt.addActionListener(new MyReadInListener());
+        buttonBox.add(readIt);
 
         Box nameBox = new Box(BoxLayout.Y_AXIS);
 
@@ -188,6 +200,52 @@ public class CyberBeatBox {
             e.printStackTrace(); 
             }
         return event;
+    }
+
+    public class MySendListener implements ActionListener {
+        public void actionPerformed(ActionEvent a) {
+            boolean[] checkboxState = new boolean[256];
+            for (int i = 0; i < 256; i++) {
+                JCheckBox check = (JCheckBox) checkboxList.get(i);
+                if(check.isSelected()){
+                    checkboxState[i] = true;
+                }
+
+            }
+            try {
+                FileOutputStream fos = new FileOutputStream("CheckBox.ser");
+                ObjectOutputStream oos = new ObjectOutputStream(fos);
+                oos.writeObject(checkboxState);
+
+                oos.close();
+            } catch (Exception e) {
+                System.out.println("Could not save chechbox state");
+                e.printStackTrace();
+            }
+        }
+    
+    }
+
+    public class MyReadInListener implements ActionListener {
+        public void actionPerformed(ActionEvent a) {
+            try { 
+                FileInputStream fis = new FileInputStream("CheckBox.ser");
+                ObjectInputStream ois = new ObjectInputStream(fis);
+                Object obj = ois.readObject();
+                boolean[] checkboxState = (boolean[])obj;
+
+                for(int i=0; i < checkboxState.length; i++){
+                    JCheckBox check = (JCheckBox) checkboxList.get(i);
+                    check.setSelected(checkboxState[i]);
+                }
+                ois.close();
+                sequencer.stop();
+                buildTrackAndStart();
+            } catch (Exception e) {
+                System.out.println("Unable to read file");
+                e.printStackTrace();
+            }
+        }
     }
 }
 
