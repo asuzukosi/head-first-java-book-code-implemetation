@@ -39,6 +39,7 @@ public class SimpleChatServer {
             } catch (Exception e) {
                 e.printStackTrace();
             }
+            System.out.println("Told everyone " + clientOutputStreams.size());
         }
     }
     /**

@@ -38,15 +38,16 @@ public class SimpleChatClient {
         JButton sendButton = new JButton("Send");
 
         sendButton.addActionListener(new SendButtonListender());
+        mainPanel.add(qScroller);
         mainPanel.add(outgoing);
-        mainPanel.add(incoming);
         mainPanel.add(sendButton);
 
         setUpNetworing();
+        Thread t = new Thread(new IncomingReader());
+        t.start();
         frame.setSize(400, 500);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
-
 
     }
 
@@ -66,8 +67,10 @@ public class SimpleChatClient {
         @Override
         public void actionPerformed(ActionEvent e) {
             try {
-                writer.println(outgoing.getText());
+                String message = outgoing.getText();
+                writer.println(message);
                 writer.flush();
+                System.out.println("sending " + message);
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
@@ -86,6 +89,8 @@ public class SimpleChatClient {
                 while ((message=reader.readLine()) != null) {
                     System.out.println("read "+ message);
                     incoming.append(message + "\n");
+                    
+                    System.out.println("appended message");
                 }
                 
             } catch (Exception e) {
