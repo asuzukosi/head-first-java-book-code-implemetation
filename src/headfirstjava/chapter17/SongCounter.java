@@ -2,14 +2,34 @@ package headfirstjava.chapter17;
 import java.io.*;
 import java.util.*;
 
+import headfirstjava.chapter17.Song.ArtisteComparator;
+
 public class SongCounter {
     static ArrayList<Song> data = new ArrayList<Song>();
     static File file;
 
     public static void main(String[] args) {
-        readFile("SongList.txt");
+        InputStreamReader reader = new InputStreamReader(System.in);
+        BufferedReader br = new BufferedReader(reader);
+        String fileName = null;
+
+        try {
+            System.out.println("Enter the name of the file you wish to read songs from");
+            fileName = br.readLine();
+        } catch (Exception e) {
+            fileName = "SongList.txt";
+        }
+
+        readFile(fileName);
         LoadFile();
+        Collections.sort(data);
         System.out.println(data);
+        ArtisteComparator comparator = new ArtisteComparator();
+        Collections.sort(data, comparator);
+        System.out.println(data);
+        HashSet<Song> set = new HashSet<Song>();
+        set.addAll(data);
+        System.out.println(set);
         
     }
     public static void readFile(String filename) {
