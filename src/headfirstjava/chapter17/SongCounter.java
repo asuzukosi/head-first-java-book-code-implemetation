@@ -27,7 +27,7 @@ public class SongCounter {
         ArtisteComparator comparator = new ArtisteComparator();
         Collections.sort(data, comparator);
         System.out.println(data);
-        HashSet<Song> set = new HashSet<Song>();
+        TreeSet<Song> set = new TreeSet<Song>();
         set.addAll(data);
         System.out.println(set);
         
