@@ -19,8 +19,8 @@ public class ServiceServerImpl extends UnicastRemoteObject implements ServiceSer
 
     }
     @Override
-    public String[] getServiceList(){
-        return (String[])serviceList.keySet().toArray();
+    public Object[] getServiceList(){
+        return serviceList.keySet().toArray();
     }
 
     @Override
@@ -30,12 +30,14 @@ public class ServiceServerImpl extends UnicastRemoteObject implements ServiceSer
 
     public static void main(String[] args) {
         try {
-            Naming.rebind("ServiceServer", new ServiceServerImpl());
+            ServiceServerImpl srvc = new ServiceServerImpl();
+            srvc.setUpServices();
+            Naming.rebind("ServiceServer", srvc);
+            System.out.println("Remote services is running");
+
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-        System.out.println("Remote services is running");
     }
     
 }

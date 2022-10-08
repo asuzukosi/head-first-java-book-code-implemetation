@@ -9,7 +9,7 @@ import java.rmi.Naming;
 public class UnivrsalBrowserClient {
     JPanel mainPanel;
     JFrame mainFrame;
-    JComboBox<String> serviceList;
+    JComboBox<Object> serviceList;
     ServiceServer server;
 
     public static void main(String[] args) {
@@ -18,23 +18,23 @@ public class UnivrsalBrowserClient {
     }
 
     public void buildGUI() {
+        setUpNetwork();
         mainFrame = new JFrame("RMI Universal Browser");
         mainPanel = new JPanel();
         mainFrame.getContentPane().add(BorderLayout.CENTER, mainPanel);
-        String[] services = getServiceList();
-        serviceList = new JComboBox<String>(services);
+        Object[] services = getServiceList();
+        serviceList = new JComboBox<Object>(services);
         mainFrame.getContentPane().add(BorderLayout.NORTH, serviceList);
         serviceList.addActionListener(new MyListListener());
 
-        setUpNetwork();
         mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         mainFrame.setSize(500, 500);
         mainFrame.setVisible(true);
 
     }
 
-    public String[] getServiceList(){
-        String[] services = null;
+    public Object[] getServiceList(){
+        Object[] services = null;
         try {
             services = server.getServiceList();
         } catch (Exception e) {
